@@ -1,0 +1,17 @@
+#reject() 경우 다음의 순서로 메시지 코드 생성
+# 1) 에러코드 . 커맨드 객체 이름
+# 2) 에러코드
+
+#rejectValue() 경우 다음의 순서로 메시지 코드 생성
+# 1) 에러코드 . 커맨드 객체 이름 . 필드명 required.loginCommand.userId 
+# 2) 에러코드 . 필드명  required.userId
+# 3) 에러코드 . 필드타입 required.java.lang.String
+# 4) 에러코드 required
+
+#에러코드=에러문구
+required=필수 항목입니다.
+invalidIdOrPassword.loginCommand=아이디({0})또는 비밀번호가 일치하지 않습니다.
+required.loginCommand.userId=사용자 아이디는 필수 항목입니다.
+required.password=비밀번호는 필수 항목입니다.
+typeMismatch.from=시작일 값 형식은 yyyy-MM-dd 여야 합니다.
+typeMismatch.to=종료일 값 형식은 yyyy-MM-dd 여야 합니다.
