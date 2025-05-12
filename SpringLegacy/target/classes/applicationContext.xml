@@ -13,5 +13,24 @@
 	class : 빈 객체를 생성할 때 사용할 클래스
 	 -->	
 	<bean name="messageBean" class="kr.spring.ch01.MessageBean"/>
-
+	
+	<bean name="studentBean" class="kr.spring.ch02.StudentBean"/>
+	
+	<bean name="operatorBean" class="kr.spring.ch03.OperatorBean"/>
+	
+	<!-- (DI)의존관계 주입 : 생성자 방식 -->
+	<bean name="writeArticleService" class="kr.spring.ch04.WriteArticleService">
+		<!-- 생성자의 인자에 의존객체 전달 -->
+		<constructor-arg>
+			<!-- 
+			ref 태그 : 빈 객체 참조 
+			bean 속성 : 빈 객체를 전달할 수 있도록 빈 객체의 식별자 명시
+			-->
+			<ref bean="writeArticleDAO"/>
+		</constructor-arg>
+	
+	</bean>
+	<bean name="writeArticleDAO" class="kr.spring.ch04.WriteArticleDAO"/>
+	
+	
 </beans>
