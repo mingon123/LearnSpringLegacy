@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DI 프로퍼티 설정방식 -->
+	<bean name="registerService" class="kr.spring.ch07.RegisterService">
+		<!-- name : 의존 객체를 주입할 때 사용할 설정 메서드 (setter)의 프로퍼티 이름 -->
+		<property name="registerDAO"><!-- 프로퍼티(DAO프로퍼티) -->
+			<ref bean="registerDAO"/><!-- 빈이름(18줄) -->
+		</property>
+	</bean>
+	<bean name="registerDAO" class="kr.spring.ch07.RegisterDAO"/>
+
+	<!-- DI 프로퍼티 설정방식 - 여러 개의 프로퍼티 -->
+	<bean id="work" class="kr.spring.ch08.WorkController">
+		<property name="periodTime">
+			<value>10</value>
+		</property>
+		<property name="email">
+			<ref bean="email"/>
+		</property>
+	</bean>
+	<bean id="email" class="kr.spring.ch08.EmailSender"/>
+
+	<!-- XML 네임스페이스를 이용한 프로퍼티 설정 -->
+	<bean id="upload" class="kr.spring.ch09.UploadController" p:timeout="50" p:image-ref="image"/>
+	<bean id="image" class="kr.spring.ch09.ImageSender"/>
+
+	<!-- 컬렉션 타입의 프로퍼티 설정 -->
+	<!-- List 타입 프로퍼티 설정 -->
+	<bean name="performanceMoniter" class="kr.spring.ch10.PerformanceMonitor">
+		<property name="deviations">
+			<list>
+				<value>0.2</value>
+				<value>0.3</value>
+			</list>
+		</property>
+	</bean>
+	
+	
+	
+	
+	
+</beans>
