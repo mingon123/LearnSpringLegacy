@@ -19,5 +19,12 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-
+	
+	<!-- MVC 기본 설정 -->
+	<beans:bean id="helloController" class="kr.spring.mvc01.controller.HelloController"/>
+	
+	<!-- 파라미터로 전송된 데이터 처리 -->
+	<beans:bean id="searchController" class="kr.spring.mvc02.controller.SearchController"/>
+	
+	
 </beans:beans>
