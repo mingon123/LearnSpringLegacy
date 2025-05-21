@@ -25,6 +25,39 @@
 	
 	<!-- 파라미터로 전송된 데이터 처리 -->
 	<beans:bean id="searchController" class="kr.spring.mvc02.controller.SearchController"/>
+		
+	<!-- @Autowired 어노테이션을 사용하기 위해서 -->
+	<context:annotation-config/>
+	
+	<!-- 전송된 데이터 자바빈에 담기 -->
+	<beans:bean id="newArticleController" class="kr.spring.mvc03.controller.NewArticleController"/>
+	<beans:bean id="articleService" class="kr.spring.mvc03.service.ArticleService"/>
+	
+	<!-- @CookieValue 어노테이션을 이용한 쿠키 매핑 -->
+	<beans:bean class="kr.spring.mvc04.controller.CookieController"/>
+	
+	<!-- 검색 데이터 처리 -->
+	<beans:bean class="kr.spring.mvc05.controller.GameSearchController"/>
+	<beans:bean class="kr.spring.mvc05.service.SearchService"/><!-- @Resource 사용시 id 입력 필수 -->
+	
+	<!-- 리소스 번들 지정 -->
+	<beans:bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<beans:property name="basenames">
+			<beans:list>
+				<beans:value>messages.validation</beans:value>
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+	
+	<!-- 유효성 체크 -->
+	<beans:bean class="kr.spring.mvc06.controller.CreateAccountController"/>
+	
+	<!-- 로그인 처리 -->
+	<beans:bean class="kr.spring.mvc07.controller.LoginController"/>
+	
+	
+	
+	
 	
 	
 </beans:beans>
