@@ -18,6 +18,7 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="1"/>
 	</beans:bean>
 	
 	<!-- MVC 기본 설정 -->
@@ -54,6 +55,37 @@
 	
 	<!-- 로그인 처리 -->
 	<beans:bean class="kr.spring.mvc07.controller.LoginController"/>
+	<beans:bean class="kr.spring.mvc07.service.LoginService"/>
+	
+	<!-- 파일 업로드 처리를 위한 multipartResolver 설정 -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="52428800"/><!-- 50M -->
+		<beans:property name="defaultEncoding" value="UTF-8"/>
+	</beans:bean>
+	
+	<!-- 파일 업로드 경로가 명시된 설정 파일 지정 -->
+	<context:property-placeholder location="classPath:config/file.properties"/>
+	
+	<!-- 파일 업로드 처리 -->
+	<beans:bean class="kr.spring.mvc08.controller.SubmitReportController"/>
+	
+	<!-- 파일 다운로드 -->
+	<beans:bean class="kr.spring.mvc09.controller.DownloadController"/>
+	<beans:bean id="download" class="kr.spring.mvc09.view.DownloadView"/>
+	
+	<!-- 무조건 jsp우선으로 호출되기 때문에 viewResolver를 새로 만듦(20line), (p:order="0"으로 가장 먼저 호출되도록 처리) -->
+	<!-- 뷰의 이름과 빈객체의 이름이 같으면 호출 order : 호출 우선 순위, 숫자가 작을 수록 먼저 호출 -->
+	<beans:bean id="viewResolver" p:order="0" class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
+	
+	<!-- 엑셀 파일 다운로드 -->
+	<beans:bean class="kr.spring.mvc10.controller.PageRanksController"/>
+	<beans:bean id="pageRanks" class="kr.spring.mvc10.view.PageRanksView"/>
+	
+	<!-- JSON 문자열 처리 -->
+	<beans:bean class="kr.spring.mvc11.controller.PageReportController"/>
+	
+	
+	
 	
 	
 	

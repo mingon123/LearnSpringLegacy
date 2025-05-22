@@ -9,6 +9,8 @@
 </head>
 <body>
 <form:form action="login.do" modelAttribute="loginVO">
+	<!-- 기본적으로 span 태그에 에러메시지를 명시하는데 element="div"로 명시하면 div 태그에 에러메시지 표시 -->
+	<form:errors element="div"/>
 	아이디 : <form:input path="userId"/>
 		   <form:errors path="userId"/><br>
 	비밀번호 : <form:password path="password"/>
