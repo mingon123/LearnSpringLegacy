@@ -37,6 +37,22 @@
 		<property name="maxWait" value="5"/>                                        
 	</bean>
 	
+	<!-- JDBC 기반 트랜잭션 관리자 설정 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" p:dataSource-ref="dataSource"/>
+	
+	<!-- 어노테이션 방식으로 트랜잭션 처리시 -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<!-- mybatis 설정 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"><!-- sqlSession공장에서 sqlSession을 만드는 개념 -->
+		<property name="configLocation" value="classpath:config/SqlMapConfig.xml"/>
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory"/>
+	</bean>
+	
 	
 </beans>
 
