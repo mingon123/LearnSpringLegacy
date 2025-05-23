@@ -13,7 +13,7 @@ import kr.spring.mvc10.vo.PageRank;
 public class PageReportController {
 	
 	@GetMapping("/pageJson.do")
-	@ResponseBody // JSP만들지 않고 어노테이션을 사용해 자동으로 만듦 
+	@ResponseBody // JSP만들지 않고 어노테이션을 사용해 View 를 자동으로 만듦 - JSON 문자열을 자동으로 만듦 
 	public List<PageRank> jsonReport(){
 		List<PageRank> pageRanks = new ArrayList<PageRank>();
 		pageRanks.add(new PageRank(1, "/file.do"));
