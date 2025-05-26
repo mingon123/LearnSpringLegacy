@@ -9,6 +9,64 @@
 			COUNT(*)
 		FROM aboard
 	</select>
+	
+	<!-- 목록 -->
+	<select id="selectBoardList" parameterType="map" resultType="boardVO"><!-- parameterType(자동), resultType="Alias를 넣은 자바빈을 연결" -->
+		SELECT
+			*
+		FROM (SELECT
+				a.*,
+				rownum rnum
+			FROM(SELECT
+					*
+				FROM aboard
+				ORDER BY num DESC)a)
+		<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+		]]>
+	</select>
+	
+	<!-- 글 등록 -->
+	<insert id="insertBoard" parameterType="boardVO">
+		INSERT INTO aboard(
+			num,
+			writer,
+			title,
+			passwd,
+			content,
+			reg_date)
+		VALUES(
+			aboard_seq.nextval,
+			#{writer}, <!-- 자바빈의 프로퍼티 -->
+			#{title},
+			#{passwd},
+			#{content},
+			SYSDATE)
+	</insert>
+	
+	<!-- 글 상세 -->
+	<select id="selectBoard" parameterType="Integer" resultType="boardVO">
+		SELECT 
+			* 
+		FROM aboard
+		WHERE num = #{num}
+	</select>
+	
+	<!-- 글 수정 -->
+	<update id="updateBoard" parameterType="boardVO">
+		UPDATE aboard
+		SET
+			writer=#{writer},
+			title=#{title},
+			content=#{content}
+		WHERE num=#{num}
+	</update>
+	
+	<!-- 글 삭제 -->
+	<delete id="deleteBoard" parameterType="Integer">
+		DELETE FROM aboard
+		WHERE num=#{num}
+	</delete>
 </mapper>
 
 

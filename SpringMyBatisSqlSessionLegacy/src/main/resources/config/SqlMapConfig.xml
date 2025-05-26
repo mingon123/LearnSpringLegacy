@@ -4,10 +4,10 @@
 <configuration>
 
 	<typeAliases>
-	    
+	    <typeAlias alias="boardVO" type="kr.spring.board.vo.BoardVO"/>
 	</typeAliases>
 	
 	<mappers>
-		
+		<mapper resource="kr/spring/board/dao/BoardMapper.xml"/>
 	</mappers>
 </configuration>

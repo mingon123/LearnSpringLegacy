@@ -11,38 +11,32 @@
 <body>
 <div class="page-main">
 	<h2>글 등록</h2>
-	<form:form action="insert.do" 
-	                     modelAttribute="boardVO">
+	<form:form action="insert.do" modelAttribute="boardVO">
 		<ul>
 			<li>
 				<form:label path="writer">작성자</form:label>
 				<form:input path="writer"/>
-				<form:errors path="writer" 
-			                    cssClass="error-color"/>
+				<form:errors path="writer" cssClass="error-color"/>
 			</li>
 			<li>
 				<form:label path="title">제목</form:label>
 				<form:input path="title"/>
-				<form:errors path="title"
-				                cssClass="error-color"/>
+				<form:errors path="title" cssClass="error-color"/>
 			</li>
 			<li>
 				<form:label path="passwd">비밀번호</form:label>
 				<form:password path="passwd"/>
-				<form:errors path="passwd"
-				                cssClass="error-color"/>
+				<form:errors path="passwd" cssClass="error-color"/>
 			</li>
 			<li>
 				<form:label path="content">내용</form:label>
 				<form:textarea path="content"/>
-				<form:errors path="content"
-				                cssClass="error-color"/>
+				<form:errors path="content" cssClass="error-color"/>
 			</li>
 		</ul>
 		<div class="align-center">
 			<form:button>등록</form:button>
-			<input type="button" value="목록"
-			   onclick="location.href='list.do'">
+			<input type="button" value="목록" onclick="location.href='list.do'">
 		</div>
 	</form:form>
 </div>

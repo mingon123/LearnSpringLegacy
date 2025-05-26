@@ -11,21 +11,18 @@
 <body>
 <div class="page-main">
 	<h2>글 삭제</h2>
-	<form:form action="delete.do" 
-	                     modelAttribute="boardVO">
+	<form:form action="delete.do" modelAttribute="boardVO">
 	    <form:hidden path="num"/>                 
 		<ul>
 			<li>
 				<form:label path="passwd">비밀번호</form:label>
 				<form:password path="passwd"/>
-				<form:errors path="passwd" 
-			                    cssClass="error-color"/>
+				<form:errors path="passwd" cssClass="error-color"/>
 			</li>
 		</ul>
 		<div class="align-center">
 			<form:button>삭제</form:button>
-			<input type="button" value="목록"
-			   onclick="location.href='list.do'">
+			<input type="button" value="목록" onclick="location.href='list.do'">
 		</div>
 	</form:form>
 </div>

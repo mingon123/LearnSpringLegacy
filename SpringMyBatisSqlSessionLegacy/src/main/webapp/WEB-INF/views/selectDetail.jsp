@@ -20,12 +20,9 @@
 		${board.content}
 	</p>
 	<div class="align-center">
-		<input type="button" value="수정"
-		                    onclick="location.href='update.do?num=${board.num}'">
-		<input type="button" value="삭제"
-		                    onclick="location.href='delete.do?num=${board.num}'"> 
-		<input type="button" value="목록"
-		                    onclick="location.href='list.do'">                                       
+		<input type="button" value="수정" onclick="location.href='update.do?num=${board.num}'">
+		<input type="button" value="삭제" onclick="location.href='delete.do?num=${board.num}'"> 
+		<input type="button" value="목록" onclick="location.href='list.do'">                                       
 	</div>
 </div>
 </body>

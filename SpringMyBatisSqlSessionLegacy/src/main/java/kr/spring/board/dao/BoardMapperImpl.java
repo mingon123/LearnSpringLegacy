@@ -3,6 +3,8 @@ package kr.spring.board.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kr.spring.board.vo.BoardVO;
@@ -10,40 +12,38 @@ import kr.spring.board.vo.BoardVO;
 @Repository
 public class BoardMapperImpl implements BoardMapper{
 
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	
 	@Override
 	public void insertBoard(BoardVO board) {
-		// TODO Auto-generated method stub
-		
+		sqlSession.insert("insertBoard", board);		
 	}
 
 	@Override
 	public Integer selectBoardCount() {
-		// TODO Auto-generated method stub
-		return null;
+						// mapper.xml에 명시된 SQL 식별 아이디
+		return sqlSession.selectOne("selectBoardCount");
 	}
 
 	@Override
 	public List<BoardVO> selectBoardList(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectList("selectBoardList", map);
 	}
 
 	@Override
 	public BoardVO selectBoard(Integer num) {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectOne("selectBoard",num);
 	}
 
 	@Override
 	public void updateBoard(BoardVO board) {
-		// TODO Auto-generated method stub
-		
+		sqlSession.update("updateBoard", board);		
 	}
 
 	@Override
 	public void deleteBoard(Integer num) {
-		// TODO Auto-generated method stub
-		
+		sqlSession.delete("deleteBoard", num);		
 	}
 	
 }

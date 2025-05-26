@@ -3,49 +3,49 @@ package kr.spring.board.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.spring.board.dao.BoardMapper;
 import kr.spring.board.vo.BoardVO;
 
 @Service
 @Transactional
 public class BoardServiceImpl implements BoardService{
 
+	@Autowired
+	BoardMapper boardMapper;
+	
 	@Override
 	public void insertBoard(BoardVO board) {
-		// TODO Auto-generated method stub
-		
+		boardMapper.insertBoard(board);		
 	}
 
 	@Override
 	public Integer selectBoardCount() {
-		// TODO Auto-generated method stub
-		return null;
+		return boardMapper.selectBoardCount();
 	}
 
 	@Override
 	public List<BoardVO> selectBoardList(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		return boardMapper.selectBoardList(map);
 	}
 
 	@Override
 	public BoardVO selectBoard(Integer num) {
-		// TODO Auto-generated method stub
-		return null;
+		return boardMapper.selectBoard(num);
 	}
 
 	@Override
 	public void updateBoard(BoardVO board) {
-		// TODO Auto-generated method stub
+		boardMapper.updateBoard(board);
 		
 	}
 
 	@Override
 	public void deleteBoard(Integer num) {
-		// TODO Auto-generated method stub
-		
+		boardMapper.deleteBoard(num);
 	}
 	
 }
