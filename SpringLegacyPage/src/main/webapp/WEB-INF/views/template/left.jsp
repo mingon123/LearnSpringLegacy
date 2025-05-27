@@ -5,4 +5,9 @@
 	<li>
 		<a href="${pageContext.request.contextPath}/board/list.do">게시판</a>
 	</li>
+	<c:if test="${!empty user}">
+	<li>
+		<a href="${pageContext.request.contextPath}/member/myPage.do">MY페이지</a>
+	</li>
+	</c:if>
 </ul>

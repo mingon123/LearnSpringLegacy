@@ -46,14 +46,14 @@
     <tx:annotation-driven transaction-manager="transactionManager"/>
 	
 	<!-- mybatis 설정 -->
-<!-- 	<bean id="sqlSessionFactory"
+	<bean id="sqlSessionFactory"
 	      class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/> 
-		<property name="typeAliasesPackage" value=""/>               
+		<property name="typeAliasesPackage" value="kr.spring.member.vo"/>               
 	</bean>
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="" />
-	</bean> -->
+		<property name="basePackage" value="kr.spring.member.dao" />
+	</bean>
 </beans>
 
 

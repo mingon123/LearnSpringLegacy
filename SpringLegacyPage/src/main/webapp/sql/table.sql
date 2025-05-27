@@ -1,0 +1,32 @@
+create table slpmember(
+ mem_num number not null,
+ id varchar2(12) unique not null,
+ nick_name varchar2(30),
+ auth number(1) default 2 not null, --0:탈퇴,1:정지,2:일반,9:관리 
+ constraint slpmember_pk primary key (mem_num)
+);
+
+create table slpmember_detail(
+ mem_num number not null,
+ name varchar2(30) not null,
+ passwd varchar2(12) not null,
+ phone varchar2(15) not null,
+ email varchar2(50) not null,
+ zipcode varchar2(5) not null,
+ address1 varchar2(90) not null,
+ address2 varchar2(90) not null,
+ photo blob,
+ photo_name varchar2(100),
+ reg_date date default sysdate not null,
+ modify_date date,
+ constraint slpmember_detail_pk primary key (mem_num),
+ constraint slpmember_detail_fk foreign key (mem_num) references slpmember (mem_num)
+);
+create sequence slpmember_seq;
+
+
+
+
+
+
+

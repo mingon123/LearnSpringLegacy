@@ -4,7 +4,7 @@
 div#main{
 	width: 1024px;
 	margin: 0 auto;
-	font-size: 10px;
+	font-size: 10pt;
 	font-family: "맑은 고딕";
 }
 div#main_header{
@@ -26,10 +26,84 @@ div#main_footer{
 	width: 100%;
 	background-color: yellow;
 }
-
-
-
-
+a:link{
+	text-decoration: none;
+	color: #000;
+}
+a:visited {
+	text-decoration: none;
+	color: #000;
+}
+a:hover {
+	text-decoration: underline;
+	color: #999;
+}
+/* 메뉴
+------------------------*/
+div#main_menu ul{
+	list-style: none;
+}
+div#main_menu ul li{
+	margin-left: 5px;
+}
+/* 페이지 기본 스타일
+------------------------*/
+.page-main{
+	width: 98%;
+	margin: 0 auto;
+}
+.page-one{
+	width: 600px;
+	margin: 0 auto;
+}
+/* 공통 메시지
+------------------------*/
+.result-display{
+	width: 400px;
+	height: 200px;
+	margin: 50px auto;
+	border: 1px solid #000;
+	display: flex;
+	justify-content: center; /*가로 정렬*/
+	align-items: center; /*세로 정렬*/
+}
+.align-center{
+	text-align: center;
+}
+.align-right{
+	text-align: right;
+}
+.error-color{
+	color: #f00;
+}
+/* 글 등록, 수정
+------------------------*/
+form {
+	width: 500px;
+	margin: 0 auto;
+	border: 1px solid #000;
+	padding: 10px 10px 10px 30px;
+}
+#write_form,#update_form{
+	border: none;
+	width: 700px;
+}
+ul {
+	list-style: none;
+}
+label {
+	width: 130px;
+	float: left;
+}
+input[type="text"],input[type="password"],input[type="email"]{
+	width: 200px;
+}
+#register_form input[id="id"]{
+	width: 116px;
+}
+input[id="zipcode"]{
+	width: 106px;
+}
 
 
 
