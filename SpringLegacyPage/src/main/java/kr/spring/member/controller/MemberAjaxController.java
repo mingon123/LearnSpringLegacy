@@ -4,11 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -44,8 +47,26 @@ public class MemberAjaxController {
 				mapAjax.put("result", "idNotFound");
 			}
 		}
+		return mapAjax;
+	}
+	
+	@PostMapping("/updateMyPhoto.do")
+	@ResponseBody
+	public Map<String, String> updateProfile(MemberVO memberVO, HttpSession session){
+		Map<String, String> mapAjax = new HashMap<String, String>();
 		
-		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user==null) {
+			mapAjax.put("result", "logout");
+		}else {
+			memberVO.setMem_num(user.getMem_num());
+			memberService.updateProfile(memberVO);
+			
+			// 이미지를 업로드한 후 세션에 저장된 회원정보에 반영
+			user.setPhoto_name(memberVO.getPhoto_name());
+			
+			mapAjax.put("result", "success");
+		}
 		return mapAjax;
 	}
 	

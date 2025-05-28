@@ -17,6 +17,14 @@
 		<put-attribute name="title" value="MyPage"/>
 		<put-attribute name="body" value="/WEB-INF/views/member/memberView.jsp"/>
 	</definition>
+	<definition name="memberModify" extends="main">
+		<put-attribute name="title" value="회원정보수정"/>
+		<put-attribute name="body" value="/WEB-INF/views/member/memberModify.jsp"/>
+	</definition>
+	<definition name="admin_memberList" extends="main">
+		<put-attribute name="title" value="회원목록(관리자)"/>
+		<put-attribute name="body" value="/WEB-INF/views/member/admin_memberList.jsp"/>
+	</definition>
 </tiles-definitions>
 
 

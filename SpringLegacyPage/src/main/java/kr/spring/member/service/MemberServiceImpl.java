@@ -36,7 +36,8 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public void updateMember(MemberVO member) {
-		// TODO Auto-generated method stub
+		memberMapper.updateNick_name(member);
+		memberMapper.updateMember(member);
 		
 	}
 
@@ -53,21 +54,19 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public void updateProfile(MemberVO meber) {
-		// TODO Auto-generated method stub
+	public void updateProfile(MemberVO member) {
+		memberMapper.updateProfile(member);
 		
 	}
 
 	@Override
 	public Integer selectRowCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		return memberMapper.selectRowCount(map);
 	}
 
 	@Override
 	public List<MemberVO> selectList(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		return memberMapper.selectList(map);
 	}
 	
 }

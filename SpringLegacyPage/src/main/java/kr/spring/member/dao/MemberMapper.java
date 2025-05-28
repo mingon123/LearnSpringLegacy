@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import kr.spring.member.vo.MemberVO;
 
@@ -24,6 +25,9 @@ public interface MemberMapper {
 	@Select("SELECT * FROM slpmember JOIN slpmember_detail USING(mem_num) WHERE mem_num=#{mem_num}")
 	public MemberVO selectMember(Long mem_num);
 	// 회원 정보 수정
+	@Update("UPDATE slpmember SET nick_name=#{nick_name} WHERE mem_num=#{mem_num}")
+	public void updateNick_name(MemberVO member);
+	@Update("UPDATE slpmember_detail SET name=#{name},phone=#{phone},email=#{email},zipcode=#{zipcode},address1=#{address1},address2=#{address2},modify_date=SYSDATE WHERE mem_num=#{mem_num}")
 	public void updateMember(MemberVO member);
 	// 비밀번호 수정
 	public void updatePassword(MemberVO member);
@@ -31,6 +35,7 @@ public interface MemberMapper {
 	public void deleteMember(Long mem_num);
 	public void deleteMember_detail(Long mem_num);
 	// 프로필 이미지 업데이트
+	@Update("UPDATE slpmember_detail SET photo=#{photo},photo_name=#{photo_name} WHERE mem_num=#{mem_num}") //#{photo}는 byte[]이어야만 함. 아니면 blob에서 못읽음
 	public void updateProfile(MemberVO meber);
 	
 	// 회원관리 - 관리자

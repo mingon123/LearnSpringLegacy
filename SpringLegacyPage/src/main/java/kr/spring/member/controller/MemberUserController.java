@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
@@ -128,5 +129,49 @@ public class MemberUserController {
 		model.addAttribute("member", member);		
 		
 		return "memberView";
+	}
+	
+	// 수정 폼 호출
+	@GetMapping("/update.do")
+	public String updateform(HttpSession session, Model model) {
+		MemberVO vo = (MemberVO)session.getAttribute("user");
+		
+		MemberVO memberVO = memberService.selectMember(vo.getMem_num());
+		model.addAttribute("memberVO", memberVO);
+		
+		return "memberModify"; // tiles 설정(jsp X)
+	}
+	
+	// 수정 폼에서 전송된 데이터 처리
+	@PostMapping("/update.do")
+	public String updateSubmit(@Valid MemberVO memberVO, BindingResult result, HttpSession session) {
+		log.debug("<<회원 정보 수정>> : " + memberVO);
+		
+		// 유효성 체크 결과 오류가 있으면 폼 호출
+		if(result.hasErrors()) {
+			return "memberModify";
+		}
+		
+		MemberVO vo = (MemberVO)session.getAttribute("user");
+		memberVO.setMem_num(vo.getMem_num());
+		
+		// 회원 정보 수정
+		memberService.updateMember(memberVO);
+		
+		return "redirect:/member/myPage.do";
+	}
+	
+	// 이미지 출력
+	@GetMapping("/photoView.do")
+	public ModelAndView viewImage(HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		MemberVO memberVO = memberService.selectMember(user.getMem_num());
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("imageView"); // 이 이름과 일치하는 빈의 이름을 찾아서 호출 - servlet-context.xml에 파일 다운로드(ImageView.java)
+		mav.addObject("imageFile",memberVO.getPhoto());
+		mav.addObject("filename", memberVO.getPhoto_name());
+		
+		return mav;
 	}
 }

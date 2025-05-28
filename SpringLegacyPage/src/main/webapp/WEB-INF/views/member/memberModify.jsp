@@ -1,29 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<!-- 회원가입 시작 -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.7.1.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/confirmId.js"></script>
+<!-- 회원 정보 수정 시작 -->
 <div class="page-main">
-	<h2>회원가입</h2>
-	<form:form modelAttribute="memberVO" id="register_form" action="registerUser.do">
+	<h2>회원 정보 수정</h2>
+	<form:form modelAttribute="memberVO" id="modify_form" action="update.do">
 		<ul>
 			<li>
-				<form:label path="id">아이디</form:label>
-				<form:input path="id"/>
-				<input type="button" id="confirmId" value="ID중복체크">
-				<span id="message_id"></span>
-				<form:errors path="id" cssClass="error-color"/>
-			</li>
-			<li>
-				<form:label path="name">이름</form:label>
+				<form:label path="name">이름</form:label><!-- path가 자동으로 VO로부터 값을 읽어와 값을 넣어주기 때문에 value추가 필요 X -->
 				<form:input path="name"/>
 				<form:errors path="name" cssClass="error-color"/>
 			</li>
 			<li>
-				<form:label path="passwd">비밀번호</form:label>
-				<form:password path="passwd"/>
-				<form:errors path="passwd" cssClass="error-color"/>
+				<form:label path="nick_name">별명</form:label>
+				<form:input path="nick_name"/>
+				<form:errors path="nick_name" cssClass="error-color"/>
 			</li>
 			<li>
 				<form:label path="phone">전화번호</form:label>
@@ -54,7 +45,7 @@
 		</ul>
 		<div class="align-center">
 			<input type="submit" value="전송">
-			<input type="button" value="홈으로" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
+			<input type="button" value="홈으로" onclick="location.href=${pageContext.request.contextPath}/main/main.do">
 		</div>
 	</form:form>
 	<!-- 우편번호 서비스 시작 -->
@@ -155,4 +146,4 @@
 	</script>
 	<!-- 우편번호 서비스 끝 -->
 </div>
-<!-- 회원가입 끝 -->
+<!-- 회원 정보 수정 끝 -->
