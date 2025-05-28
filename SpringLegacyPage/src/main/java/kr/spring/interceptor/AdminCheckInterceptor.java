@@ -20,7 +20,7 @@ public class AdminCheckInterceptor extends HandlerInterceptorAdapter{
 		
 		HttpSession session = request.getSession();
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		if(user!=null) {
+		if(user==null) {
 			// 로그인이 되지 않은 상태
 			response.sendRedirect(request.getContextPath()+"/member/login.do");
 			return false;
