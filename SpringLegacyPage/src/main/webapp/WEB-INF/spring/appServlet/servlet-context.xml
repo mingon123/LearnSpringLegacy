@@ -27,6 +27,7 @@
 			<beans:list>
 				<beans:value>/WEB-INF/tiles-def/main.xml</beans:value>
 				<beans:value>/WEB-INF/tiles-def/member.xml</beans:value>
+				<beans:value>/WEB-INF/tiles-def/board.xml</beans:value>
 			</beans:list>
 		</beans:property>
 	</beans:bean>
@@ -65,7 +66,15 @@
 			<mapping path="/member/myPage.do"/>
 			<mapping path="/member/update.do"/>
 			<mapping path="/member/changePassword.do"/>
+			<mapping path="/member/admin_list.do"/>
+			<mapping path="/member/admin_update.do"/>
 			<beans:bean class="kr.spring.interceptor.LoginCheckInterceptor"/>
+		</interceptor>
+		<!-- 관리자 체크 -->
+		<interceptor>
+			<mapping path="/member/admin_list.do"/>
+			<mapping path="/member/admin_update.do"/>
+			<beans:bean class="kr.spring.interceptor.AdminCheckInterceptor"/>
 		</interceptor>
 	</interceptors>
 	

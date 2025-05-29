@@ -24,8 +24,21 @@ create table slpmember_detail(
 );
 create sequence slpmember_seq;
 
-
-
+--게시판
+create table slpboard(
+ board_num number not null,
+ title varchar2(90) not null,
+ content clob not null,
+ hit number(9) default 0 not null,
+ reg_date date default sysdate not null,
+ modify_date date,
+ filename varchar2(100),
+ ip varchar2(40) not null,
+ mem_num number not null,
+ constraint slpboard_pk primary key (board_num),
+ constraint slpboard_fk foreign key (mem_num) references slpmember (mem_num)
+);
+create sequence slpboard_seq;
 
 
 
