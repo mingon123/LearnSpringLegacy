@@ -4,11 +4,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -57,9 +62,31 @@ public class MemberAdminController {
 		return mav;
 	}
 	
+	// 회원 정보 수정 폼 호출
+	@GetMapping("/admin_update.do")
+	public String form(long mem_num, Model model) {
+		MemberVO memberVO = memberService.selectMember(mem_num);
+		
+		model.addAttribute("memberVO", memberVO);
+		
+		return "admin_memberModify";
+	}
 	
-	
-	
+	// 회원 정보 수정 처리
+	@PostMapping("/admin_update.do")
+	public String submit(@Valid MemberVO memberVO, BindingResult result) {
+		log.debug("<<관리자 회원 정보 수정>> : " + memberVO);
+		
+		// 유효성 체크 결과 오류가 있으면 폼 호출
+		if(result.hasErrors()) {
+			return "admin_memberModify";
+		}
+		
+		// 회원 정보 수정
+		memberService.updateByAdmin(memberVO);
+		
+		return "redirect:/member/admin_list.do";
+	}
 	
 	
 	

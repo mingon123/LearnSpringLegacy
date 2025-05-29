@@ -1,19 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- 회원 정보 수정 시작 -->
 <div class="page-main">
 	<h2>회원 정보 수정</h2>
-	<form:form modelAttribute="memberVO" id="modify_form" action="update.do">
+	<form:form modelAttribute="memberVO" id="modify_form" action="admin_update.do">
+	    <form:hidden path="mem_num"/>
 		<ul>
 			<li>
-				<form:label path="name">이름</form:label><!-- path가 자동으로 VO로부터 값을 읽어와 값을 넣어주기 때문에 value추가 필요 X -->
-				<form:input path="name"/>
-				<form:errors path="name" cssClass="error-color"/>
+				<label>회원궈한</label>
+				<c:if test="${memberVO.auth!=9}">
+				<form:radiobutton path="auth" value="1"/>정지
+				<form:radiobutton path="auth" value="2"/>일반
+				</c:if>
+				<c:if test="${memberVO.auth==9}">
+				관리
+				<form:hidden path="auth"/>
+				</c:if>
 			</li>
 			<li>
-				<form:label path="nick_name">별명</form:label>
-				<form:input path="nick_name"/>
+				<form:label path="name">이름</form:label>
+				<form:input path="name"/>
+				<form:errors path="name" cssClass="error-color"/>
 			</li>
 			<li>
 				<form:label path="phone">전화번호</form:label>

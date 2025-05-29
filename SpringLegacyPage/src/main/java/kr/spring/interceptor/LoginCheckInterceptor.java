@@ -24,9 +24,11 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter{
 		HttpSession session = request.getSession();
 		if(session.getAttribute("user")==null) {
 			// 로그인이 되지 않은 상태
+			log.debug("<<로그인 실패>>");
 			response.sendRedirect(request.getContextPath()+"/member/login.do");
 			return false;
 		}
+		log.debug("<<로그인 성공>>");
 		return true;
 	}
 }

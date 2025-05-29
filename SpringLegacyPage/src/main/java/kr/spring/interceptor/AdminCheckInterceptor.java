@@ -20,19 +20,15 @@ public class AdminCheckInterceptor extends HandlerInterceptorAdapter{
 		
 		HttpSession session = request.getSession();
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		if(user==null) {
-			// 로그인이 되지 않은 상태
-			response.sendRedirect(request.getContextPath()+"/member/login.do");
-			return false;
-		}
-		
+
 		if(user.getAuth()!=9) {
 			// 관리자 권한이 아닐 때
+			log.debug("<<관리자페이지 접속 실패>>");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/common/accessDenied.jsp");
 			dispatcher.forward(request, response);
 			return false;
 		}
-		
+		log.debug("<<관리자페이지 접속 성공>>");
 		return true;
 	}
 	

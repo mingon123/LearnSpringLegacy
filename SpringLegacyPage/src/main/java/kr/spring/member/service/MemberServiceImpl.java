@@ -43,14 +43,13 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public void updatePassword(MemberVO member) {
-		// TODO Auto-generated method stub
-		
+		memberMapper.updatePassword(member);		
 	}
 
 	@Override
 	public void deleteMember(Long mem_num) {
-		// TODO Auto-generated method stub
-		
+		memberMapper.deleteMember(mem_num);
+		memberMapper.deleteMember_detail(mem_num);
 	}
 
 	@Override
@@ -67,6 +66,12 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public List<MemberVO> selectList(Map<String, Object> map) {
 		return memberMapper.selectList(map);
+	}
+
+	@Override
+	public void updateByAdmin(MemberVO member) {
+		memberMapper.updateByAdmin(member);
+		memberMapper.updateDetailByAdmin(member);
 	}
 	
 }

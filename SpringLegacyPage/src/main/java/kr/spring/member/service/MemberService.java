@@ -3,6 +3,8 @@ package kr.spring.member.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Update;
+
 import kr.spring.member.vo.MemberVO;
 
 public interface MemberService {
@@ -26,4 +28,6 @@ public interface MemberService {
 	// 회원목록
 	public Integer selectRowCount(Map<String, Object> map);
 	public List<MemberVO> selectList(Map<String, Object> map);
+	// 회원 권한 및 정보 수정
+	public void updateByAdmin(MemberVO member);
 }
