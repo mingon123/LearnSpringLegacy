@@ -3,6 +3,7 @@ package kr.spring.board.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +20,12 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Override
 	public List<BoardVO> selectList(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		return boardMapper.selectList(map);
 	}
 
 	@Override
-	public Integer selectRowCount(Map<String, Object> map) {
-		return null;
+	public Integer selectRowCount(String keyfield, String keyword) {
+		return boardMapper.selectRowCount(keyfield, keyword);
 	}
 
 	@Override
@@ -35,14 +35,12 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public BoardVO selectBoard(Long board_num) {
-		// TODO Auto-generated method stub
-		return null;
+		return boardMapper.selectBoard(board_num);
 	}
 
 	@Override
 	public void updateHit(Long board_num) {
-		// TODO Auto-generated method stub
-		
+		boardMapper.updateHit(board_num);
 	}
 
 	@Override

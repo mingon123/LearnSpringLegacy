@@ -8,7 +8,7 @@ import kr.spring.board.vo.BoardVO;
 public interface BoardService {
 	// 부모글
 	public List<BoardVO> selectList(Map<String, Object> map);
-	public Integer selectRowCount(Map<String, Object> map);
+	public Integer selectRowCount(String keyfield, String keyword);
 	public void InsertBoard(BoardVO board);
 	public BoardVO selectBoard(Long board_num);
 	public void updateHit(Long board_num);

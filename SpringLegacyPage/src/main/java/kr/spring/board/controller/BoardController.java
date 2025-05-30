@@ -1,6 +1,9 @@
 package kr.spring.board.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,11 +19,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.board.service.BoardService;
 import kr.spring.board.vo.BoardVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.FileUtil;
+import kr.spring.util.PagingUtil;
+import kr.spring.util.StringUtil;
 
 @Controller
 @RequestMapping("/board")
@@ -69,9 +76,51 @@ public class BoardController {
 	
 	// 게시판 목록
 	@GetMapping("/list.do")
-	public String getList() {
+	public String getList(@RequestParam(defaultValue="1") int pageNum, String keyfield, String keyword, Model model) {
+		int count = boardService.selectRowCount(keyfield, keyword);
+		log.debug("<<글의 레코드 수>> : " + count);
+		
+		// 페이지 처리
+		PagingUtil page = new PagingUtil(keyfield, keyword, pageNum, count , 20 ,10 ,"list.do");
+		List<BoardVO> list = null;
+		if(count > 0) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("keyfield", keyfield);
+			map.put("keyword", keyword);
+			map.put("start", page.getStartRow());
+			map.put("end", page.getEndRow());
+			
+			list = boardService.selectList(map);
+		}
+		
+		model.addAttribute("count", count);
+		model.addAttribute("list", list);
+		model.addAttribute("page", page.getPage());
 		
 		return "boardList";
 	}
 	
+	// 글상세
+	@GetMapping("/detail.do")
+	public String getDetail(long board_num, Model model) {
+		log.debug("<<글상세 - board_num>> : " + board_num);
+		
+		// 해당 글의 조회수 증가
+		boardService.updateHit(board_num);
+		
+		BoardVO board = boardService.selectBoard(board_num);
+		board.setTitle(StringUtil.useNoHtml(board.getTitle()));
+		// summer note 사용시는 content에 html 태그 사용 허용
+		
+		model.addAttribute("board", board);
+		
+		return "boardView";
+	}
+	// 파일 다운로드
+	@GetMapping("/file.do")
+	public ModelAndView download(long board_num, HttpServletRequest request) {
+		BoardVO board = boardService.selectBoard(board_num);
+		
+		return new ModelAndView();
+	}
 }

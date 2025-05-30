@@ -104,9 +104,10 @@ public class BoardVO {
 		this.re_cnt = re_cnt;
 	}
 	
+	// summernote 사용으로 content 출력에서 제외
 	@Override
 	public String toString() {
-		return "BoardVO [board_num=" + board_num + ", title=" + title + ", content=" + content + ", hit=" + hit
+		return "BoardVO [board_num=" + board_num + ", title=" + title + ", hit=" + hit
 				+ ", reg_date=" + reg_date + ", modify_date=" + modify_date + ", upload=" + upload + ", filename="
 				+ filename + ", ip=" + ip + ", mem_num=" + mem_num + ", id=" + id + ", nick_name=" + nick_name
 				+ ", re_cnt=" + re_cnt + "]";
