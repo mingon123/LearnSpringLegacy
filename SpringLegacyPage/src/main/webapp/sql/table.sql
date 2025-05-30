@@ -40,6 +40,11 @@ create table slpboard(
 );
 create sequence slpboard_seq;
 
-
-
+--부모글 좋아요
+create table slpboard_fav(
+ board_num number not null,
+ mem_num number not null,
+ constraint slpfav_fk1 foreign key (board_num) references slpboard (board_num),
+ constraint slpfav_fk2 foreign key (mem_num) references slpmember (mem_num)
+);
 

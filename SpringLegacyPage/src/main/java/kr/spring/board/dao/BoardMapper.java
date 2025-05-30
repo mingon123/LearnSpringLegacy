@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import kr.spring.board.vo.BoardFavVO;
 import kr.spring.board.vo.BoardVO;
 
 public interface BoardMapper {
@@ -38,7 +39,13 @@ public interface BoardMapper {
 	public void deleteBoard(Long board_num);
 	
 	// 부모글 좋아요
-	
+	@Select("SELECT * FROM slpboard_fav WHERE board_num=#{board_num} and mem_num=#{mem_num}")
+	public BoardFavVO selectFav(BoardFavVO fav);
+	@Select("SELECT COUNT(*) FROM slpboard_fav WHERE board_num=#{board_num}")
+	public Integer selectFavCount(Long board_num);
+	public void insertFav(BoardFavVO fav);
+	public void deleteFav(BoardFavVO fav);
+	public void deleteFavByBoardNum(Long board_num);
 	
 	// 댓글
 	

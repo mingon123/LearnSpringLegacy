@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.spring.board.service.BoardService;
+import kr.spring.board.vo.BoardFavVO;
 import kr.spring.board.vo.BoardVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.FileUtil;
@@ -49,6 +50,18 @@ public class BoardAjaxController {
 				mapAjax.put("result", "success");
 			}
 		}
+		return mapAjax;
+	}
+	
+	// 부모글 좋아요 읽기
+	@GetMapping("/getFav.do")
+	@ResponseBody
+	public Map<String, Object> getFav(BoardFavVO fav, HttpSession session){
+		log.debug("<<게시판 좋아요>> : " + fav);
+		
+		Map<String, Object> mapAjax = new HashMap<String, Object>();
+				
+		
 		
 		return mapAjax;
 	}
