@@ -3,7 +3,6 @@ package kr.spring.board.service;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,14 +44,16 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public void updateBoard(BoardVO board) {
-		// TODO Auto-generated method stub
-		
+		boardMapper.updateBoard(board);
 	}
 
 	@Override
 	public void deleteFile(Long board_num) {
-		// TODO Auto-generated method stub
-		
+		boardMapper.deleteFile(board_num);
 	}
 	
+	@Override
+	public void deleteBoard(Long board_num) {
+		boardMapper.deleteBoard(board_num);
+	}
 }

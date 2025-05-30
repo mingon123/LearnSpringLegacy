@@ -1,5 +1,6 @@
 package kr.spring.board.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -118,9 +119,65 @@ public class BoardController {
 	}
 	// 파일 다운로드
 	@GetMapping("/file.do")
-	public ModelAndView download(long board_num, HttpServletRequest request) {
+	public ModelAndView download(long board_num, HttpSession session) {
 		BoardVO board = boardService.selectBoard(board_num);
-		
-		return new ModelAndView();
+		// 컨텍스트 경로상의 절대경로 구하기
+		String path = session.getServletContext().getRealPath("/upload")+"/"+board.getFilename();
+		File downloadFile = new File(path);
+								// 뷰이름, 속성명, 속성값
+		return new ModelAndView("downloadView","downloadFile",downloadFile);
 	}
+	
+	// 글수정 폼
+	@GetMapping("/update.do")
+	public String formUpdate(long board_num, Model model) {
+		BoardVO boardVO = boardService.selectBoard(board_num);
+		model.addAttribute("boardVO", boardVO);		
+		
+		return "boardModify";
+	}
+	
+	// 글수정 처리
+	@PostMapping("/update.do")
+	public String submitUpdate(@Valid BoardVO boardVO, BindingResult result, HttpServletRequest request, Model model) throws IllegalStateException, IOException {
+		log.debug("<<글수정 처리>> : " + boardVO);
+		
+		// 유효성 체크 결과 오류가 있으면 폼 호출
+		if(result.hasErrors()) {
+			return "boardModify";
+		}
+		
+		// IP 셋팅
+		boardVO.setIp(request.getRemoteAddr());
+		// 파일 업로드 처리
+		// 파일이 업로드 되면 파일명 반환, 
+		// 파일이 업로드 되지 않으면 null 반환
+		boardVO.setFilename(FileUtil.createFile(request, boardVO.getUpload()));
+		// 글수정
+		boardService.updateBoard(boardVO);
+		
+		model.addAttribute("message", "글수정 완료!!");
+		model.addAttribute("url", request.getContextPath()+"/board/detail.do?board_num="+boardVO.getBoard_num());
+		
+		return "common/resultAlert";
+	}
+	
+	// 글삭제 처리
+	@GetMapping("/delete.do")
+	public String submitDelete(long board_num, HttpServletRequest request) { // request는 파일삭제에 필요
+		log.debug("<<글삭제>> : " + board_num);
+		
+		// DB에 저장된 파일 정보 구하기
+		BoardVO db_board = boardService.selectBoard(board_num);
+		// 글삭제
+		boardService.deleteBoard(board_num);
+		
+		if(db_board.getFilename()!=null) {
+			// 파일 삭제
+			FileUtil.removeFile(request, db_board.getFilename());
+		}
+		
+		return "redirect:/board/list.do";
+	}
+	
 }

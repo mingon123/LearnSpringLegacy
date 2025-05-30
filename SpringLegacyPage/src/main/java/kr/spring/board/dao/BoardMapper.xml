@@ -72,8 +72,21 @@
 		]]>
 	</select>
 
+	<!-- 글수정 -->
+	<update id="updateBoard" parameterType="boardVO">
+		UPDATE slpboard SET
+			<if test="filename != null">
+			filename=#{filename},
+			</if>
+			title=#{title},
+			content=#{content},
+			ip=#{ip},
+			modify_date=SYSDATE
+		WHERE board_num=#{board_num}
+	</update>
 
 </mapper>
+
 
 
 

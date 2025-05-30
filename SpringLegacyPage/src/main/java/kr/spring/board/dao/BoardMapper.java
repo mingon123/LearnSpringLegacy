@@ -3,6 +3,7 @@ package kr.spring.board.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -31,7 +32,9 @@ public interface BoardMapper {
 	@Update("UPDATE slpboard SET hit=hit+1 WHERE board_num=#{board_num}")
 	public void updateHit(Long board_num);
 	public void updateBoard(BoardVO board);
+	@Update("UPDATE slpboard SET filename='' WHERE board_num=#{board_num}")
 	public void deleteFile(Long board_num);
+	@Delete("DELETE FROM slpboard WHERE board_num=#{board_num}")
 	public void deleteBoard(Long board_num);
 	
 	// 부모글 좋아요

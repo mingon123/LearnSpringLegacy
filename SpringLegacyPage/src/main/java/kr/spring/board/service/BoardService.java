@@ -14,7 +14,8 @@ public interface BoardService {
 	public void updateHit(Long board_num);
 	public void updateBoard(BoardVO board);
 	public void deleteFile(Long board_num);
-
+	public void deleteBoard(Long board_num);
+	
 	// 부모글 좋아요
 	
 	
