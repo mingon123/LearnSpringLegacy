@@ -48,16 +48,20 @@ public interface BoardMapper {
 	public void insertFav(BoardFavVO fav);
 	@Delete("DELETE FROM slpboard_fav WHERE board_num=#{board_num} AND mem_num=#{mem_num}")
 	public void deleteFav(BoardFavVO fav);
+	@Delete("DELETE FROM slpboard_fav WHERE board_num=#{board_num}")
 	public void deleteFavByBoardNum(Long board_num);
 	
 	// 댓글
 	public List<BoardReplyVO> selectListReply(Map<String, Object> map);
+	@Select("SELECT COUNT(*) FROM slpboard_reply WHERE board_num=#{board_num}")
 	public Integer selectRowCountReply(Map<String, Object> map);
 	@Insert("INSERT INTO slpboard_reply (re_num,re_content,re_ip,board_num,mem_num) VALUES (slpreply_seq.nextval,#{re_content},#{re_ip},#{board_num},#{mem_num})")
 	public void insertReply(BoardReplyVO boardReply);
-	
+	@Update("UPDATE slpboard_reply SET re_content=#{re_content},re_ip=#{re_ip},re_mdate=SYSDATE WHERE re_num=#{re_num}")
 	public void updateReply(BoardReplyVO boardReply);
+	@Delete("DELETE FROM slpboard_reply WHERE re_num=#{re_num}")
 	public void deleteReply(BoardReplyVO boardReply);
+	@Delete("DELETE FROM slpboard_reply WHERE board_num=${board_num}")
 	public void deleteReplyByBoardNum(Long board_num);
 	
 	// 댓글 좋아요

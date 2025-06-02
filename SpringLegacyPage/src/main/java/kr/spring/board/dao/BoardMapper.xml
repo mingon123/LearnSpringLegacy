@@ -85,6 +85,26 @@
 		WHERE board_num=#{board_num}
 	</update>
 
+	<!-- 댓글 목록 -->
+	<select id="selectListReply" parameterType="map" resultType="boardReplyVO">
+		SELECT
+			*
+		FROM (SELECT
+				a.*,
+				rownum rnum
+			FROM (SELECT
+					*
+				FROM slpboard_reply
+				JOIN slpmember
+				USING (mem_num)
+				WHERE board_num=#{board_num}
+				ORDER BY re_num DESC)a)
+		<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+		]]>
+	</select>
+
+
 </mapper>
 
 

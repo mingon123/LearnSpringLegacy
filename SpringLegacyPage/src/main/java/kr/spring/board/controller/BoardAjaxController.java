@@ -1,5 +1,6 @@
 package kr.spring.board.controller;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.spring.board.service.BoardService;
@@ -22,12 +24,13 @@ import kr.spring.board.vo.BoardReplyVO;
 import kr.spring.board.vo.BoardVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.FileUtil;
+import kr.spring.util.PagingUtil;
 
 @Controller
 @RequestMapping("/board")
 public class BoardAjaxController {
 	private static final Logger log = LoggerFactory.getLogger(BoardAjaxController.class);
-	
+
 	@Autowired
 	private BoardService boardService;
 	
@@ -138,6 +141,73 @@ public class BoardAjaxController {
 		return mapAjax;
 	}
 	
+	// 댓글 목록
+	@GetMapping("/listReply.do")
+	@ResponseBody
+	public Map<String, Object> getList(@RequestParam(defaultValue="1") int pageNum, int rowCount, int board_num, HttpSession session){
+		log.debug("<<댓글 목록 - pageNum>> : " + pageNum);
+		log.debug("<<댓글 목록 - board_num>> : " + board_num);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("board_num", board_num);
+		
+		// 글의 총개수
+		int count = boardService.selectRowCountReply(map);
+		
+		// 페이지 처리
+		PagingUtil page = new PagingUtil(pageNum, count, rowCount, 10, null); // ajax통신해서 start,end만 필요하기 때문에 요청 url null처리
+		MemberVO memberVO = (MemberVO)session.getAttribute("user");
+		List<BoardReplyVO> list = null;
+		if(count > 0) {
+			map.put("start", page.getStartRow());
+			map.put("end", page.getEndRow());
+			
+			// 댓글 좋아요 처리
+			if(memberVO!=null) {
+				map.put("mem_num", memberVO.getMem_num());
+			}else {
+				map.put("mem_num", 0);
+			}
+			list = boardService.selectListReply(map);
+		}else {
+			list = Collections.emptyList();
+		}
+		
+		Map<String, Object> mapAjax = new HashMap<String, Object>();
+		mapAjax.put("count", count);
+		mapAjax.put("list", list);		
+		if(memberVO!=null) {
+			mapAjax.put("user_num", memberVO.getMem_num());
+		}
+		
+		return mapAjax;
+	}
+	
+	// 댓글 수정
+	@PostMapping("/updateReply.do")
+	@ResponseBody
+	public Map<String, String> modifyReply(BoardReplyVO vo, HttpSession session, HttpServletRequest request){
+		log.debug("<<댓글 수정>> : " + vo);
+		
+		Map<String, String> mapAjax = new HashMap<String, String>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user==null) {
+			// 로그인이 되지 않은 경우
+			mapAjax.put("result", "logout");
+		}else if(user.getMem_num()==vo.getMem_num()) {
+			// 로그인 회원번호와 작성자 회원번호 일치
+			
+			// IP 등록
+			vo.setRe_ip(request.getRemoteAddr());
+			// 댓글 수정
+			boardService.updateReply(vo);			
+			mapAjax.put("result", "success");			
+		}else {
+			// 로그인 회원번호와 작성자 회원번호 불일치
+			mapAjax.put("result", "wrongAccess");
+		}		
+		return mapAjax;
+	}
 	
 	
 }
