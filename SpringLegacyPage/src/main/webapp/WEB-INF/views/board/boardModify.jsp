@@ -48,7 +48,7 @@
 								$.ajax({
 									url:'deleteFile.do',
 									data:{board_num:${boardVO.board_num}}, // jsp에서 호출할 때는 el사용 가능. js파일에서는 el 불가
-									type:'get',
+									type:'post',
 									dataType:'json',
 									success:function(param){
 										if(param.result == 'logout'){

@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import kr.spring.board.vo.BoardFavVO;
+import kr.spring.board.vo.BoardReplyVO;
 import kr.spring.board.vo.BoardVO;
 
 public interface BoardMapper {
@@ -39,16 +40,25 @@ public interface BoardMapper {
 	public void deleteBoard(Long board_num);
 	
 	// 부모글 좋아요
-	@Select("SELECT * FROM slpboard_fav WHERE board_num=#{board_num} and mem_num=#{mem_num}")
+	@Select("SELECT * FROM slpboard_fav WHERE board_num=#{board_num} AND mem_num=#{mem_num}")
 	public BoardFavVO selectFav(BoardFavVO fav);
 	@Select("SELECT COUNT(*) FROM slpboard_fav WHERE board_num=#{board_num}")
 	public Integer selectFavCount(Long board_num);
+	@Insert("INSERT INTO slpboard_fav (board_num,mem_num) VALUES (#{board_num},#{mem_num})")
 	public void insertFav(BoardFavVO fav);
+	@Delete("DELETE FROM slpboard_fav WHERE board_num=#{board_num} AND mem_num=#{mem_num}")
 	public void deleteFav(BoardFavVO fav);
 	public void deleteFavByBoardNum(Long board_num);
 	
 	// 댓글
+	public List<BoardReplyVO> selectListReply(Map<String, Object> map);
+	public Integer selectRowCountReply(Map<String, Object> map);
+	@Insert("INSERT INTO slpboard_reply (re_num,re_content,re_ip,board_num,mem_num) VALUES (slpreply_seq.nextval,#{re_content},#{re_ip},#{board_num},#{mem_num})")
+	public void insertReply(BoardReplyVO boardReply);
 	
+	public void updateReply(BoardReplyVO boardReply);
+	public void deleteReply(BoardReplyVO boardReply);
+	public void deleteReplyByBoardNum(Long board_num);
 	
 	// 댓글 좋아요
 }

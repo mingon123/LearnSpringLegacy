@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.board.dao.BoardMapper;
 import kr.spring.board.vo.BoardFavVO;
+import kr.spring.board.vo.BoardReplyVO;
 import kr.spring.board.vo.BoardVO;
 
 @Service
@@ -70,19 +71,42 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public void insertFav(BoardFavVO fav) {
-		// TODO Auto-generated method stub
-		
+		boardMapper.insertFav(fav);
 	}
 
 	@Override
 	public void deleteFav(BoardFavVO fav) {
+		boardMapper.deleteFav(fav);		
+	}
+
+	@Override
+	public List<BoardReplyVO> selectListReply(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer selectRowCountReply(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void insertReply(BoardReplyVO boardReply) {
+		boardMapper.insertReply(boardReply);
+	}
+
+	@Override
+	public void updateReply(BoardReplyVO boardReply) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void deleteFavByBoardNum(Long board_num) {
+	public void deleteReply(BoardReplyVO boardReply) {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 }

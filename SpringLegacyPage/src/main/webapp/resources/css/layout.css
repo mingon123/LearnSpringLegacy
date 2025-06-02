@@ -141,6 +141,87 @@ table td,table th{
 	border: 1px solid #000;
 	padding: 5px;
 }
+/* 글상세
+------------------------*/
+.detail-img{
+	max-width: 500px;
+}
+div#reply_div{
+	padding: 5px 10px 40px 10px;
+	margin-top: 10px;
+	background-color: #eee;
+}
+#output_fav, .output-rfav{
+	cursor: pointer;
+}
+#output_fcount{
+	width: 50px;
+	display: inline-block;
+}
+form#re_form{
+	width: 650px;
+	border: none;
+}
+span.re_title{
+	color: #000;
+	font-size: 12pt;
+	line-height: 200%;
+}
+span.letter_count{
+	font-size: 10pt;
+	color: #999;
+}
+span.form-id{
+	padding-left: 93px;
+	color: #000;
+}
+textarea.rep-content{
+	width: 90%;
+	height: 50px;
+	margin: 10px;
+}
+div#re_first{
+	float: left;
+	width: 70%;
+	padding-left: 15px;
+	margin-bottom: 10px;
+}
+div#re_second{
+	float: left;
+	width: 19%;
+	margin-bottom: 10px;
+}
+div#loading{
+	width: 100px;
+	margin: 0 auto;
+}
+div.paging-button{
+	text-align: right;
+}
+div#output{
+	clear: both;
+}
+form#mre_form{
+	border: none;
+	margin: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

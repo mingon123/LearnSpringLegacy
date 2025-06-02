@@ -48,3 +48,24 @@ create table slpboard_fav(
  constraint slpfav_fk2 foreign key (mem_num) references slpmember (mem_num)
 );
 
+--댓글
+create table slpboard_reply(
+ re_num number not null,
+ re_content varchar2(900) not null,
+ re_date date default sysdate not null,
+ re_mdate date,
+ re_ip varchar2(40) not null,
+ board_num number not null,
+ mem_num number not null,
+ constraint slpboard_reply_pk primary key (re_num),
+ constraint slpboard_reply_fk1 foreign key (board_num) references slpboard (board_num),
+ constraint slpboard_reply_fk2 foreign key (mem_num) references slpmember (mem_num)
+);
+create sequence slpreply_seq;
+
+
+
+
+
+
+

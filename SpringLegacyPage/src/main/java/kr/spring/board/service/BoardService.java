@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.spring.board.vo.BoardFavVO;
+import kr.spring.board.vo.BoardReplyVO;
 import kr.spring.board.vo.BoardVO;
 
 public interface BoardService {
@@ -22,10 +23,13 @@ public interface BoardService {
 	public Integer selectFavCount(Long board_num);
 	public void insertFav(BoardFavVO fav);
 	public void deleteFav(BoardFavVO fav);
-	public void deleteFavByBoardNum(Long board_num);
 	
 	// 댓글
-	
+	public List<BoardReplyVO> selectListReply(Map<String, Object> map);
+	public Integer selectRowCountReply(Map<String, Object> map);
+	public void insertReply(BoardReplyVO boardReply);
+	public void updateReply(BoardReplyVO boardReply);
+	public void deleteReply(BoardReplyVO boardReply);
 	
 	// 댓글 좋아요
 }
