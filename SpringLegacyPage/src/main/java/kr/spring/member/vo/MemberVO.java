@@ -35,6 +35,12 @@ public class MemberVO {
 	private Date reg_date;
 	private Date modify_date;
 	
+	// 별명이 있을 경우 별명, 없으면 id 반환
+	public String getUserName() {
+		if(nick_name!=null) return nick_name;
+		return id;
+	}
+	
 	// 비밀번호 변경시 비밀번호를 저장하는 용도로 사용
 	@Size(min=4,max=12)
 	private String now_passwd;

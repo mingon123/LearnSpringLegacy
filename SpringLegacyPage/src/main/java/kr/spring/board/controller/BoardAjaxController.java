@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.spring.board.service.BoardService;
 import kr.spring.board.vo.BoardFavVO;
+import kr.spring.board.vo.BoardReFavVO;
 import kr.spring.board.vo.BoardReplyVO;
 import kr.spring.board.vo.BoardVO;
 import kr.spring.member.vo.MemberVO;
@@ -209,5 +210,86 @@ public class BoardAjaxController {
 		return mapAjax;
 	}
 	
+	// 댓글 삭제
+	@PostMapping("/deleteReply.do")
+	@ResponseBody
+	public Map<String, String> deleteReply(long re_num, long mem_num, HttpSession session) {
+		log.debug("<<re_num>> : " + re_num);
+		log.debug("<<mem_num>> : " + mem_num);
+		
+		Map<String, String> mapAjax = new HashMap<String, String>();
+
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user==null) {
+			// 로그인이 되지 않은 경우
+			mapAjax.put("result", "logout");
+		}else if(user.getMem_num()==mem_num) {
+			// 로그인한 회원번호와 작성자 회원번호 일치
+			boardService.deleteReply(re_num);
+			mapAjax.put("result", "success");			
+		}else {
+			// 로그인한 회원번호와 작성자 회원번호 불일치
+			mapAjax.put("result", "wrongAccess");
+		}
+		return mapAjax;
+	}
 	
+	
+	// 댓글 좋아요 읽기
+	@GetMapping("/getReFav.do")
+	@ResponseBody
+	public Map<String, Object> getReFav(BoardReFavVO fav, HttpSession session){
+		log.debug("<<댓글 좋아요 - 읽기>> : " + fav);
+		
+		Map<String, Object> mapAjax = new HashMap<String, Object>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user==null) {
+			mapAjax.put("status", "noFav");
+		}else {
+			// 로그인한 회원번호 셋팅
+			fav.setMem_num(user.getMem_num());
+			BoardReFavVO boardReFav = boardService.selectReFav(fav);
+			if(boardReFav!=null) {
+				mapAjax.put("status", "yesFav");
+			}else {
+				mapAjax.put("status", "noFav");
+			}
+		}
+		mapAjax.put("count", boardService.selectReFavCount(fav.getRe_num()));
+		mapAjax.put("result", "success");
+		
+		return mapAjax;
+	}
+	
+	// 댓글 좋아요 등록/삭제
+	@PostMapping("/writeReFav.do")
+	@ResponseBody
+	public Map<String, Object> writeReFav(BoardReFavVO fav, HttpSession session){
+		log.debug("<<댓글 좋아요 - 등록/삭제>> : " + fav);
+		
+		Map<String, Object> mapAjax = new HashMap<String, Object>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user==null) {
+			mapAjax.put("result", "logout");
+		}else {
+			// 로그인한 회원번호 셋팅
+			fav.setMem_num(user.getMem_num());
+			BoardReFavVO boardReFav = boardService.selectReFav(fav);
+			if(boardReFav!=null) {
+				// 좋아요가 등록되어 있으면 삭제
+				boardService.deleteReFav(fav);
+				mapAjax.put("status", "noFav");
+			}else {
+				// 좋아요가 등록되지 않았으면 등록
+				boardService.insertReFav(fav);
+				mapAjax.put("status", "yesFav");
+			}
+			mapAjax.put("count", boardService.selectReFavCount(fav.getRe_num()));
+			mapAjax.put("result", "success");
+		}
+		
+		return mapAjax;
+	}
 }

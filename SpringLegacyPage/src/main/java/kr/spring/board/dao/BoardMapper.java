@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import kr.spring.board.vo.BoardFavVO;
+import kr.spring.board.vo.BoardReFavVO;
 import kr.spring.board.vo.BoardReplyVO;
 import kr.spring.board.vo.BoardVO;
 
@@ -60,9 +61,22 @@ public interface BoardMapper {
 	@Update("UPDATE slpboard_reply SET re_content=#{re_content},re_ip=#{re_ip},re_mdate=SYSDATE WHERE re_num=#{re_num}")
 	public void updateReply(BoardReplyVO boardReply);
 	@Delete("DELETE FROM slpboard_reply WHERE re_num=#{re_num}")
-	public void deleteReply(BoardReplyVO boardReply);
+	public void deleteReply(Long re_num);
 	@Delete("DELETE FROM slpboard_reply WHERE board_num=${board_num}")
 	public void deleteReplyByBoardNum(Long board_num);
 	
 	// 댓글 좋아요
+	@Select("SELECT * FROM slpreply_fav WHERE re_num=#{re_num} AND mem_num=#{mem_num}")
+	public BoardReFavVO selectReFav(BoardReFavVO fav);
+	@Select("SELECT COUNT(*) FROM slpreply_fav WHERE re_num=#{re_num}")
+	public Integer selectReFavCount(Long re_num);
+	@Insert("INSERT INTO slpreply_fav (re_num, mem_num) VALUES (#{re_num},#{mem_num})")
+	public void insertReFav(BoardReFavVO fav);
+	@Delete("DELETE FROM slpreply_fav WHERE re_num=#{re_num} AND mem_num=#{mem_num}")
+	public void deleteReFav(BoardReFavVO fav);
+	@Delete("DELETE FROM slpreply_fav WHERE re_num=#{re_num}")
+	public void deleteReFavByReNum(Long re_num);
+	@Delete("DELETE FROM slpreply_fav WHERE board_num=#{board_num}")
+	public void deleteReFavByBoardNum(Long board_num);
+	
 }

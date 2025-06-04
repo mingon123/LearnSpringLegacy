@@ -13,10 +13,17 @@ public class BoardReplyVO {
 	private long board_num;
 	private long mem_num;
 	private String id;
+	private String nick_name;
 	
 	// 댓글 좋아요 작업시
 	private int click_num;
 	private int refav_cnt;
+	
+	// 별명이 있을 경우 별명, 없으면 id 반환
+	public String getUserName() {
+		if(nick_name!=null) return nick_name;
+		return id;
+	}
 	
 	public long getRe_num() {
 		return re_num;
@@ -78,12 +85,18 @@ public class BoardReplyVO {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+	public String getNick_name() {
+		return nick_name;
+	}
+	public void setNick_name(String nick_name) {
+		this.nick_name = nick_name;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardReplyVO [re_num=" + re_num + ", re_content=" + re_content + ", re_date=" + re_date + ", re_mdate="
-				+ re_mdate + ", re_ip=" + re_ip + ", board_num=" + board_num + ", mem_num=" + mem_num + ", click_num="
-				+ click_num + ", refav_cnt=" + refav_cnt + "]";
+				+ re_mdate + ", re_ip=" + re_ip + ", board_num=" + board_num + ", mem_num=" + mem_num + ", id=" + id
+				+ ", nick_name=" + nick_name + ", click_num=" + click_num + ", refav_cnt=" + refav_cnt + "]";
 	}
 	
 }

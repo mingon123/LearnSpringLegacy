@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.board.dao.BoardMapper;
 import kr.spring.board.vo.BoardFavVO;
+import kr.spring.board.vo.BoardReFavVO;
 import kr.spring.board.vo.BoardReplyVO;
 import kr.spring.board.vo.BoardVO;
 
@@ -100,9 +101,29 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public void deleteReply(BoardReplyVO boardReply) {
-		boardMapper.deleteReply(boardReply);
+	public void deleteReply(Long re_num) {
+		boardMapper.deleteReply(re_num);
 	}
 
+	@Override
+	public BoardReFavVO selectReFav(BoardReFavVO fav) {
+		return boardMapper.selectReFav(fav);
+	}
+
+	@Override
+	public Integer selectReFavCount(Long re_num) {
+		return boardMapper.selectReFavCount(re_num);
+	}
+
+	@Override
+	public void insertReFav(BoardReFavVO fav) {
+		boardMapper.insertReFav(fav);
+		
+	}
+
+	@Override
+	public void deleteReFav(BoardReFavVO fav) {
+		boardMapper.deleteReFav(fav);
+	}
 	
 }

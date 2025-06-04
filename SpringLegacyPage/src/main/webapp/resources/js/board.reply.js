@@ -43,7 +43,7 @@ $(function(){
 				$(param.list).each(function(index,item){
 					let output = `
 								<div class="item">
-									<h4>${item.id}</h4>
+									<h4>${item.userName}</h4>
 									<div class="sub-item">
 										<p>${useBrNoHtml(item.re_content)}</p>										
 					`;
@@ -55,6 +55,21 @@ $(function(){
 					}
 					
 					// 좋아요 설정
+					let fav_cnt = 0;
+					if(item.refav_cnt!=0) fav_cnt = item.refav_cnt;
+					if(item.click_num == 0 || param.user_num != item.click_num){
+						output += `
+								<img class="output-rfav" src="../resources/images/heart01.png" data-num="${item.re_num}">
+								<span class="output-rfcount">${fav_cnt}</span>
+						`;
+					}else{
+						output += `
+								<img class="output-rfav" src="../resources/images/heart02.png" data-num="${item.re_num}">
+								<span class="output-rfcount">${fav_cnt}</span>
+						`;
+					}
+					
+					
 					if(param.user_num==item.mem_num){
 						// 로그인한 회원번호와 댓글 작성자 회원번호 일치
 						output += `
@@ -193,6 +208,40 @@ $(function(){
 	});
 	
 	/*------------------------------
+	 댓글 삭제
+	------------------------------- */
+	$(document).on('click', '.delete-btn',function(){
+		// 댓글 번호
+		let re_num = $(this).attr('data-num');
+		// 작성자 회원번호
+		let mem_num = $(this).attr('data-mem');
+		
+		// 서버와 통신
+		$.ajax({
+			url:'deleteReply.do',
+			type:'post',
+			data:{re_num:re_num,mem_num:mem_num}, // :기준 앞은 키 뒤는 변수(value)
+			dataType:'json',
+			success:function(param){
+				if(param.result == 'logout'){
+					alert('로그인해야 삭제할 수 있습니다.');
+				}else if(param.result == 'success'){
+					alert('삭제 완료!');
+					selectList(1);
+				}else if(param.result == 'wrongAccess'){
+					alert('타인의 글을 삭제할 수 없습니다.');
+				}else{
+					alert('댓글 삭제 오류 발생');
+				}
+			},
+			error:function(){
+				alert('네트워크 오류');
+			}
+			
+		})
+	});
+	
+	/*------------------------------
 	 댓글 수 표시
 	------------------------------- */
 	function displayReplyCount(param){
@@ -260,6 +309,48 @@ $(function(){
 	function initForm(){
 		$('textarea').val('');
 		$('#re_first .letter-count').text('300/300');
+	}
+	
+	/*------------------------------
+	 댓글 좋아요 등록/삭제
+	------------------------------- */
+	$(document).on('click','.output-rfav',function(){
+		// 이벤트가 발생한 태그 정보 저장
+		const heart = $(this); // success부분에서 호출하면 이벤트 발생한게 사라져 다르게 인식하기 때문에 미리 상태를 받아둬야함
+		$.ajax({
+			url:'writeReFav.do',
+			type:'post',
+			data:{re_num:heart.attr('data-num')},
+			dataType:'json',
+			success:function(param){
+				if(param.result=='logout'){
+					alert('로그인 후 좋아요를 눌러주세요');
+				}else if(param.result=='success'){
+					displayFav(param,heart);
+				}else{
+					alert('등록/삭제 오류 발생');
+				}
+			},
+			error:function(){
+				alert('네트워크 오류 발생');
+			}
+		})
+	});
+	
+	
+	/*------------------------------
+	 좋아요 표시
+	------------------------------- */
+	function displayFav(param,heart){ // 매개변수 heart는 등록/삭제할 때 사용
+		let output;
+		if(param.status=='noFav'){
+			output = '../resources/images/heart01.png';
+		}else{
+			output = '../resources/images/heart02.png';			
+		}
+		// 문서 객체 추가
+		heart.attr('src',output);
+		heart.parent().find('.output-rfcount').text(param.count);
 	}
 	
 	/*------------------------------

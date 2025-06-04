@@ -2,13 +2,27 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- 회원목록 시작 -->
+<script type="text/javascript">
+window.onload=function(){
+	const myForm = document.getElementById('search_form');
+	myForm.onsubmit=function(){
+		const keyword = document.getElementById('keyword');
+		if(keyword.value.trim()==''){
+			alert('검색어를 입력하세요');
+			keyword.value = '';
+			keyword.focus();
+			return false;
+		}
+	};
+};
+</script>
 <div class="page-main">
 	<h2>회원목록(관리자용)</h2>
 	<form action="admin_list.do" id="search_form" method="get">
 		<ul class="search">
 			<li>
 				<select name="keyfield">
-					<option value="1" <c:if test="${param.keyfield == 1}">selected</c:if>>ID</option>
+					<option value="1" <c:if test="${param.keyfield == 1}">selected</c:if>>ID(별명)</option>
 					<option value="2" <c:if test="${param.keyfield == 2}">selected</c:if>>이름</option>
 					<option value="3" <c:if test="${param.keyfield == 3}">selected</c:if>>이메일</option>
 					<option value="4" <c:if test="${param.keyfield == 4}">selected</c:if>>전체</option>
@@ -29,7 +43,7 @@
 	<c:if test="${count > 0}">
 	<table>
 		<tr>
-			<th>아이디</th>
+			<th>아이디(별명)</th>
 			<th>이름</th>
 			<th>전화번호</th>
 			<th>이메일</th>
@@ -39,8 +53,8 @@
 		<c:forEach var="member" items="${list}">
 		<tr>
 			<td>
-				<c:if test="${member.auth == 0}">${member.id}</c:if>
-				<c:if test="${member.auth > 0}"><a href="admin_update.do?mem_num=${member.mem_num}">${member.id}</a></c:if>
+				<c:if test="${member.auth == 0}">${member.id}(${member.nick_name})</c:if>
+				<c:if test="${member.auth > 0}"><a href="admin_update.do?mem_num=${member.mem_num}">${member.id}(${member.nick_name})</a></c:if>
 			</td>
 			<td>${member.name}</td>
 			<td>${member.phone}</td>

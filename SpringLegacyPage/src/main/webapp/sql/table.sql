@@ -63,6 +63,15 @@ create table slpboard_reply(
 );
 create sequence slpreply_seq;
 
+--댓글 좋아요
+create table slpreply_fav(
+ re_num number not null,
+ mem_num number not null,
+ constraint slpreply_fav_fk1 foreign key (re_num) references slpboard_reply (re_num),
+ constraint slpreply_fav_fk2 foreign key (mem_num) references slpmember (mem_num)
+);
+
+
 
 
 

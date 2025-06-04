@@ -25,6 +25,12 @@ public class BoardVO {
 	private String nick_name;
 	private int re_cnt; // 댓글 개수
 	
+	// 별명이 있을 경우 별명, 없으면 id 반환
+	public String getUserName() {
+		if(nick_name!=null) return nick_name;
+		return id;
+	}
+	
 	public long getBoard_num() {
 		return board_num;
 	}

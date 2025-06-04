@@ -11,15 +11,9 @@
 	<img src="${pageContext.request.contextPath}/resources/images/face.png" width="25" height="25" class="my-photo">
 	</c:if>
 	
-	<%-- 아이디 또는 별명 표시 --%>
-	<c:if test="${!empty user && !empty user.nick_name}">
-	[<span class="user_name">${user.nick_name}</span>]
-	</c:if>
-	<c:if test="${!empty user && empty user.nick_name}">
-	[<span class="user_name">${user.id}</span>]
-	</c:if>	
-	
 	<c:if test="${!empty user}">
+	<%-- 아이디 또는 별명 표시 --%>
+	[<span>${user.userName}</span>]
 	<a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>
 	</c:if>
 	<c:if test="${empty user}">

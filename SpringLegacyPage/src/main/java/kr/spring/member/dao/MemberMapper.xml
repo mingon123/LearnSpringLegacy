@@ -12,7 +12,8 @@
 		<where>
 			<if test="keyword != null and keyword != ''">
 				<if test="keyfield == 1">
-					m.id LIKE '%' || #{keyword} || '%'			
+					m.id LIKE '%' || #{keyword} || '%' or
+					m.nick_name LIKE '%' || #{keyword} || '%'
 				</if>
 				<if test="keyfield == 2">
 					d.name LIKE '%' || #{keyword} || '%'			
@@ -22,6 +23,7 @@
 				</if>
 				<if test="keyfield == 4">
 					m.id LIKE '%' || #{keyword} || '%' or
+					m.nick_name LIKE '%' || #{keyword} || '%' or
 					d.name LIKE '%' || #{keyword} || '%' or
 					d.email LIKE '%' || #{keyword} || '%'
 				</if>
@@ -43,7 +45,8 @@
 				<where>
 					<if test="keyword != null and keyword != ''">
 						<if test="keyfield == 1">
-							m.id LIKE '%' || #{keyword} || '%'			
+							m.id LIKE '%' || #{keyword} || '%' or
+							m.nick_name LIKE '%' || #{keyword} || '%'
 						</if>
 						<if test="keyfield == 2">
 							d.name LIKE '%' || #{keyword} || '%'			
@@ -53,6 +56,7 @@
 						</if>
 						<if test="keyfield == 4">
 							m.id LIKE '%' || #{keyword} || '%' or
+							m.nick_name LIKE '%' || #{keyword} || '%' or
 							d.name LIKE '%' || #{keyword} || '%' or
 							d.email LIKE '%' || #{keyword} || '%'
 						</if>

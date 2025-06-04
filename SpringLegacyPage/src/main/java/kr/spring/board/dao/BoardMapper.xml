@@ -16,13 +16,15 @@
 					title LIKE '%' || #{keyword} || '%'
 				</if>
 				<if test="keyfield == 2">
-					id LIKE '%' || #{keyword} || '%'
+					id LIKE '%' || #{keyword} || '%' or
+					nick_name LIKE '%' || #{keyword} || '%'
 				</if>
 				<if test="keyfield == 3">
 					content LIKE '%' || #{keyword} || '%'
 				</if>
 				<if test="keyfield == 4">
 					title LIKE '%' || #{keyword} || '%' or
+					nick_name LIKE '%' || #{keyword} || '%' or
 					id LIKE '%' || #{keyword} || '%' or
 					content LIKE '%' || #{keyword} || '%'
 				</if>
@@ -45,8 +47,11 @@
 					hit,
 					reg_date,
 					mem_num,
-					id
+					id,
+					nick_name,
+					re_cnt
 				FROM slpboard
+				LEFT OUTER JOIN (SELECT COUNT(*) re_cnt, board_num FROM slpboard_reply GROUP BY board_num) USING(board_num) /*re_cnt는 BoardVO에 들어있음*/
 				JOIN slpmember USING(mem_num)
 				<where>
 					<if test="keyword != null and keyword != ''">
@@ -54,13 +59,15 @@
 							title LIKE '%' || #{keyword} || '%'
 						</if>
 						<if test="keyfield == 2">
-							id LIKE '%' || #{keyword} || '%'
+							id LIKE '%' || #{keyword} || '%' or
+							nick_name LIKE '%' || #{keyword} || '%'
 						</if>
 						<if test="keyfield == 3">
 							content LIKE '%' || #{keyword} || '%'
 						</if>
 						<if test="keyfield == 4">
 							title LIKE '%' || #{keyword} || '%' or
+							nick_name LIKE '%' || #{keyword} || '%' or
 							id LIKE '%' || #{keyword} || '%' or
 							content LIKE '%' || #{keyword} || '%'
 						</if>
@@ -97,6 +104,9 @@
 				FROM slpboard_reply
 				JOIN slpmember
 				USING (mem_num)
+				/*로그인한 상태에서 클릭한 사람의 정보 읽기, 로그인하지 않으면 0 전달*/
+				LEFT OUTER JOIN (SELECT re_num,mem_num click_num FROM slpreply_fav WHERE mem_num=#{mem_num}) USING(re_num)
+				LEFT OUTER JOIN (SELECT re_num, COUNT(*) refav_cnt FROM slpreply_fav GROUP BY re_num) USING(re_num)
 				WHERE board_num=#{board_num}
 				ORDER BY re_num DESC)a)
 		<![CDATA[
