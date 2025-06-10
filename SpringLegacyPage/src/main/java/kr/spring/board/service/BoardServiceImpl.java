@@ -57,6 +57,13 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Override
 	public void deleteBoard(Long board_num) {
+		// 좋아요 삭제
+		boardMapper.deleteFavByBoardNum(board_num);
+		// 댓글의 좋아요 삭제
+		boardMapper.deleteReFavByBoardNum(board_num);
+		// 댓글 삭제
+		boardMapper.deleteReplyByBoardNum(board_num);		
+		// 부모글 삭제
 		boardMapper.deleteBoard(board_num);
 	}
 
@@ -102,6 +109,9 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public void deleteReply(Long re_num) {
+		// 댓글 좋아요 삭제
+		boardMapper.deleteReFavByReNum(re_num);		
+		// 댓글 삭제
 		boardMapper.deleteReply(re_num);
 	}
 

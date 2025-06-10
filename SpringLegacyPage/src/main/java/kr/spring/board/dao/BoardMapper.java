@@ -76,7 +76,7 @@ public interface BoardMapper {
 	public void deleteReFav(BoardReFavVO fav);
 	@Delete("DELETE FROM slpreply_fav WHERE re_num=#{re_num}")
 	public void deleteReFavByReNum(Long re_num);
-	@Delete("DELETE FROM slpreply_fav WHERE board_num=#{board_num}")
+	@Delete("DELETE FROM slpreply_fav WHERE re_num IN (SELECT re_num FROM slpboard_reply WHERE board_num=#{board_num})")
 	public void deleteReFavByBoardNum(Long board_num);
 	
 }
